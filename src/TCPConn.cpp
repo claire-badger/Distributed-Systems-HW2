@@ -189,7 +189,7 @@ void TCPConn::getPasswd() {
 
 void TCPConn::changePassword() {
     std::string pword;
-    if (!_connfd.hasData())
+    if (!_connfd.hasData(1000000000))
         return;
     std::string cmd;
     if (!getUserInput(cmd))
@@ -198,12 +198,20 @@ void TCPConn::changePassword() {
     if (_status == s_changepwd){
         pword = cmd;
         _status = s_confirmpwd;
+        _connfd.writeFD("Please enter new password again: ");
     }
     if (_status == s_confirmpwd){
-        if (pmanager.checkPasswd(_username.c_str(), pword.c_str())){
-            pmanager.changePasswd(_username.c_str(), pword.c_str());
-            _status = s_menu;
-            sendMenu();
+        std::string confirm;
+        if (_connfd.hasData(1000000000) && getUserInput(confirm)){
+            if (confirm == pword){
+                pmanager.changePasswd(_username.c_str(), pword.c_str());
+                _status = s_menu;
+                sendMenu();
+            }
+            else{
+                _connfd.writeFD("Sorry, that didn't work");
+                sendMenu();
+            }
         }
     }
     handleConnection();
@@ -272,6 +280,7 @@ void TCPConn::getMenuChoice() {
    } else if (cmd.compare("passwd") == 0) {
       _connfd.writeFD("New Password: ");
       _status = s_changepwd;
+      changePassword();
    } else if (cmd.compare("1") == 0) {
       msg += "You want a prediction about the weather? You're asking the wrong Phil.\n";
       msg += "I'm going to give you a prediction about this winter. It's going to be\n";

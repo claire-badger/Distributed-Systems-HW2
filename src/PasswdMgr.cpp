@@ -111,7 +111,7 @@ bool PasswdMgr::changePasswd(const char *name, const char *passwd) {
     std::vector<uint8_t> hash; // hash from the password file
     std::vector<uint8_t> salt;
     FileFD pwfile(_pwd_file.c_str());
-    std::ofstream outfile ("temp.txt");
+    std::ofstream outfile ("temp");
     FileFD writer = FileFD ("temp");
 
     if (!writer.openFile(FileFD::writefd)){
@@ -137,7 +137,7 @@ bool PasswdMgr::changePasswd(const char *name, const char *passwd) {
             writeUser(writer, std::string (uname), hash, salt);
         }
     }
-    rename("temp.txt", _pwd_file.c_str());
+    rename("temp", _pwd_file.c_str());
     hash.clear();
     salt.clear();
     pwfile.closeFD();
