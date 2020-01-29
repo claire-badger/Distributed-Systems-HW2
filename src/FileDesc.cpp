@@ -91,7 +91,7 @@ bool FileDesc::hasData(long ms_timeout) {
 /*****************************************************************************************
  * readFD - simply reads all available string data (up to bufsize) from the FD
  *
- *    Params: buf - string to store the data in
+ *    Params: buf - string to store the data inyi'm i'msdf
  *
  *    Returns: returns the amount of data read or -1 for failure
  *****************************************************************************************/
@@ -101,12 +101,12 @@ ssize_t FileDesc::readFD(std::string &buf) {
    bzero(readbuf, sizeof(char) * bufsize);
    ssize_t amt_read = 0;
    if ((amt_read = read(_fd, readbuf, bufsize)) < 0) {
-      delete readbuf;
+      delete[] readbuf;
       return -1;
    }
    
    buf = readbuf;
-   delete readbuf;
+   delete[] readbuf;
    return amt_read;
 }
 
@@ -321,7 +321,7 @@ FileFD::~FileFD() {
  ******************************************************************************************/
 
 bool FileFD::openFile(fd_file_type ftype) {
-   int file_flags[] = {O_RDONLY, O_WRONLY, O_WRONLY | O_APPEND};
+   int file_flags[] = { O_RDONLY, O_WRONLY, O_WRONLY | O_APPEND};
 
    if ((_fd = open(_filename.c_str(), file_flags[ftype])) == -1)
       return false;

@@ -7,8 +7,6 @@
 #include "TCPConn.h"
 #include "strfuncts.h"
 
-// The filename/path of the password file
-const char pwdfilename[] = "passwd";
 
 TCPConn::TCPConn(){ // LogMgr &server_log):_server_log(server_log) {
 
@@ -119,7 +117,22 @@ void TCPConn::handleConnection() {
  **********************************************************************************************/
 
 void TCPConn::getUsername() {
-   // Insert your mind-blowing code here
+    if (!_connfd.hasData())
+        return;
+    std::string cmd;
+
+    if (getUserInput(cmd)) {
+        if (pmanager.checkUser(cmd.c_str())) {
+            _username = cmd;
+            _status = s_passwd;
+            _connfd.writeFD("Please enter password: ");
+        }
+        else{
+            _connfd.writeFD("Sorry, username not recognized\n");
+            disconnect();
+        }
+    }
+    handleConnection();
 }
 
 /**********************************************************************************************
@@ -131,7 +144,31 @@ void TCPConn::getUsername() {
  **********************************************************************************************/
 
 void TCPConn::getPasswd() {
-   // Insert your astounding code here
+    if (!_connfd.hasData())
+        return;
+    std::string cmd;
+
+    if (getUserInput(cmd)) {
+        if(pmanager.checkPasswd(_username.c_str(), cmd.c_str())){
+            _status = s_menu;//change status
+            sendMenu();
+            handleConnection();
+            return;
+        }
+    }
+    _connfd.writeFD("Sorry, password not recognized\nPlease try again: ");
+    cmd.clear();
+
+    if (getUserInput(cmd)) {
+        if(pmanager.checkPasswd(_username.c_str(), cmd.c_str())){
+            _status = s_menu;//change status
+            sendMenu();
+        }
+        else {
+            _connfd.writeFD("Two incorrect passwords...\n");
+            disconnect();
+        }
+    }
 }
 
 /**********************************************************************************************
@@ -144,7 +181,25 @@ void TCPConn::getPasswd() {
  **********************************************************************************************/
 
 void TCPConn::changePassword() {
-   // Insert your amazing code here
+    std::string pword;
+    if (!_connfd.hasData())
+        return;
+    std::string cmd;
+    if (!getUserInput(cmd))
+        return;
+
+    if (_status == s_changepwd){
+        pword = cmd;
+        _status = s_confirmpwd;
+    }
+    if (_status == s_confirmpwd){
+        if (pmanager.checkPasswd(_username.c_str(), pword.c_str())){
+            pmanager.changePasswd(_username.c_str(), pword.c_str());
+            _status = s_menu;
+            sendMenu();
+        }
+    }
+    handleConnection();
 }
 
 

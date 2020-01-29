@@ -1,10 +1,11 @@
-#include <argon2.h>
+#include "argon2.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 #include <algorithm>
 #include <cstring>
 #include <list>
+#include <fstream>
 #include "PasswdMgr.h"
 #include "FileDesc.h"
 #include "strfuncts.h"
@@ -29,12 +30,27 @@ PasswdMgr::~PasswdMgr() {
  *******************************************************************************************/
 
 bool PasswdMgr::checkUser(const char *name) {
-   std::vector<uint8_t> passwd, salt;
+   std::vector<uint8_t> hash, salt;
 
-   bool result = findUser(name, passwd, salt);
+    FileFD pwfile(_pwd_file.c_str());
 
-   return result;
-     
+    // You may need to change this code for your specific implementation
+
+    if (!pwfile.openFile(FileFD::readfd))
+        throw pwfile_error("Could not open passwd file for reading");
+
+    while (1) {
+        std::string uname;
+
+        if (!readUser(pwfile, uname, hash, salt)) {
+            return false;
+        }
+
+        if (0 == uname.compare(std::string(name))) {
+            pwfile.closeFD();
+            return true;
+        }
+    }
 }
 
 /*******************************************************************************************
@@ -54,17 +70,26 @@ bool PasswdMgr::checkPasswd(const char *name, const char *passwd) {
    std::vector<uint8_t> userhash; // hash from the password file
    std::vector<uint8_t> passhash; // hash derived from the parameter passwd
    std::vector<uint8_t> salt;
+   std::vector<uint8_t> usersalt;
 
    // Check if the user exists and get the passwd string
    if (!findUser(name, userhash, salt))
       return false;
 
-   hashArgon2(passhash, salt, passwd, &salt);
+   hashArgon2(passhash, usersalt, passwd, &salt);
 
-   if (userhash == passhash)
-      return true;
-
-   return false;
+   if (userhash == passhash){
+       userhash.clear();
+       passhash.clear();
+       salt.clear();
+       usersalt.clear();
+       return true;
+   }
+    userhash.clear();
+    passhash.clear();
+    salt.clear();
+    usersalt.clear();
+    return false;
 }
 
 /*******************************************************************************************
@@ -81,10 +106,43 @@ bool PasswdMgr::checkPasswd(const char *name, const char *passwd) {
  *******************************************************************************************/
 
 bool PasswdMgr::changePasswd(const char *name, const char *passwd) {
+    bool result = false;
+    std::vector<uint8_t> hash; // hash from the password file
+    std::vector<uint8_t> salt;
+    FileFD pwfile(_pwd_file.c_str());
+    FileFD writer = FileFD ("temp");
 
-   // Insert your insane code here
+    if (!writer.openFile(FileFD::writefd)){
+        throw pwfile_error("could not open file for writing");
+    }
 
-   return true;
+    if (!pwfile.openFile(FileFD::readfd))
+        throw pwfile_error("Could not open passwd file for reading");
+
+
+    bool eof = false;
+    while (!eof) {
+        std::string uname;
+
+        if (!readUser(pwfile, uname, hash, salt)) {
+            eof = true;
+        }
+
+        if (0 == uname.compare(name)) {
+            hashArgon2(hash, salt, passwd);
+            writeUser(writer, (std::string &) name, hash, salt);
+        }
+        else{
+            writeUser(writer, (std::string &) name, hash, salt);
+            result = true;
+        }
+    }
+
+    hash.clear();
+    salt.clear();
+    pwfile.closeFD();
+    writer.closeFD();
+    return result;
 }
 
 /*****************************************************************************************************
@@ -104,6 +162,12 @@ bool PasswdMgr::changePasswd(const char *name, const char *passwd) {
 bool PasswdMgr::readUser(FileFD &pwfile, std::string &name, std::vector<uint8_t> &hash, std::vector<uint8_t> &salt)
 {
    // Insert your perfect code here!
+   std::string bufextra;
+
+   if (pwfile.readStr(name) <= 0) return false;
+   if (pwfile.readBytes(hash, 32) <= 0) return false;
+   if (pwfile.readBytes(salt, 16) <= 0) return false;
+   pwfile.readStr(bufextra);
 
    return true;
 }
@@ -121,11 +185,21 @@ bool PasswdMgr::readUser(FileFD &pwfile, std::string &name, std::vector<uint8_t>
  *
  *****************************************************************************************************/
 
-int PasswdMgr::writeUser(FileFD &pwfile, std::string &name, std::vector<uint8_t> &hash, std::vector<uint8_t> &salt)
+int PasswdMgr::writeUser(FileFD &pwfile, std::string name, std::vector<uint8_t> &hash, std::vector<uint8_t> &salt)
 {
    int results = 0;
+   std::string str;
+   auto hashstr = std::string(reinterpret_cast<char*>(&hash[0]), hash.size());
+   auto saltstr = std::string(reinterpret_cast<char*>(&salt[0]), salt.size());
+
+    str.append(name);
+    str.append("\n");
+    str.append(hashstr);
+    str.append(saltstr);
+    str.append("\n");
 
    // Insert your wild code here!
+   results = pwfile.writeFD(str);
 
    return results; 
 }
@@ -185,9 +259,36 @@ bool PasswdMgr::findUser(const char *name, std::vector<uint8_t> &hash, std::vect
  *
  *    Throws: runtime_error if the salt passed in is not the right size
  *****************************************************************************************************/
-void PasswdMgr::hashArgon2(std::vector<uint8_t> &ret_hash, std::vector<uint8_t> &ret_salt, 
+void PasswdMgr::hashArgon2(std::vector<uint8_t> &ret_hash, std::vector<uint8_t> &ret_salt,
                            const char *in_passwd, std::vector<uint8_t> *in_salt) {
-   // Hash those passwords!!!!
+    uint8_t hash[hashlen];
+    uint8_t salt[saltlen];
+    srand(time(0));
+    if (in_salt!=NULL){
+        if (in_salt->size() != saltlen){
+            throw std::runtime_error("salt length incorrect");
+        }
+        for (int i = 0; i < saltlen; i++) salt[i] = (*in_salt)[i];
+
+    }else{
+    for (int i = 0; i < saltlen; i++) salt[i] = ((rand() % 33)+33);
+    }
+
+    uint32_t t_cost = 2;            // 1-pass computation
+    uint32_t m_cost = (1<<16);      // 64 mebibytes memory usage
+    uint32_t parallelism = 1;       // number of threads and lanes
+
+    // high-level API
+    argon2i_hash_raw(t_cost, m_cost, parallelism, &in_passwd, strlen(in_passwd), salt, 16, hash,
+                     32);
+    ret_hash.clear();
+    ret_hash.reserve(hashlen);
+    ret_salt.clear();
+    ret_salt.reserve(saltlen);
+    for (int i = 0; i < hashlen; i++)
+        ret_hash.push_back(hash[i]);
+    for (int i = 0; i< saltlen; i++)
+        ret_salt.push_back(salt[i]);
 
 }
 
@@ -200,5 +301,41 @@ void PasswdMgr::hashArgon2(std::vector<uint8_t> &ret_hash, std::vector<uint8_t> 
 
 void PasswdMgr::addUser(const char *name, const char *passwd) {
    // Add those users!
+    std::vector<uint8_t> hash, salt; // hash from the password file
+    FileFD pwfile(_pwd_file.c_str());
+    std::ofstream outfile ("temp.txt");
+    FileFD writefile ("temp.txt");
+
+    if (!writefile.openFile(FileFD::writefd))
+        throw pwfile_error("Could not open write file for writing");
+
+    // You may need to change this code for your specific implementation
+
+    if (!pwfile.openFile(FileFD::readfd))
+        throw pwfile_error("Could not open passwd file for reading");
+
+    // Password file should be in the format username\n{32 byte hash}{16 byte salt}\n
+    bool eof = false;
+    while (!eof) {
+        std::string uname;
+        if (!readUser(pwfile, uname, hash, salt)) {
+            eof = true;
+            hashArgon2(hash, salt, passwd);
+            writeUser(writefile, (std::string ) name, hash, salt);
+        }
+
+        else if (0 == uname.compare(std::string(name))) {
+            throw pwfile_error("user already exists");
+        }
+        else{
+            writeUser(writefile, (std::string ) uname, hash, salt);
+        }
+    }
+
+    rename("temp.txt", _pwd_file.c_str());
+    writefile.closeFD();
+    pwfile.closeFD();
+    hash.clear();
+    salt.clear();
 }
 

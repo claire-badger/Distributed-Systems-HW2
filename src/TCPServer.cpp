@@ -10,9 +10,25 @@
 #include <iostream>
 #include <memory>
 #include <sstream>
+#include <fstream>
 #include "TCPServer.h"
+#include <algorithm>>
 
 TCPServer::TCPServer(){ // :_server_log("server.log", 0) {
+
+    //init the whitelist of ip addresses
+    std::fstream inFile;
+    std::string x;
+    inFile.open("whitelist.txt");
+
+    if (!inFile) {
+        std::cerr << "Unable to open file whitelist.txt";
+        exit(1);   // call system to stop
+    }
+
+    while (inFile >> x) {
+        ip_addresses.push_back(x);
+    }
 }
 
 
@@ -41,6 +57,12 @@ void TCPServer::bindSvr(const char *ip_addr, short unsigned int port) {
  
 }
 
+bool TCPServer::CheckIP(sockaddr_in ip_address,  socklen_t len){
+    char *str = nullptr;
+    inet_ntop(AF_INET, &(ip_address.sin_addr), str, len);
+    return std::find(ip_addresses.begin(), ip_addresses.end(), std::string(str)) != ip_addresses.end();
+}
+
 /**********************************************************************************************
  * listenSvr - Performs a loop to look for connections and create TCPConn objects to handle
  *             them. Also loops through the list of connections and handles data received and
@@ -65,7 +87,7 @@ void TCPServer::listenSvr() {
       struct sockaddr_in cliaddr;
       socklen_t len = sizeof(cliaddr);
 
-      if (_sockfd.hasData()) {
+      if (_sockfd.hasData() ) {//&& CheckIP(cliaddr, len)
          TCPConn *new_conn = new TCPConn();
          if (!new_conn->accept(_sockfd)) {
             // _server_log.strerrLog("Data received on socket but failed to accept.");
