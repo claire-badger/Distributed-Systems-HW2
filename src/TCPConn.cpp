@@ -122,12 +122,14 @@ void TCPConn::getUsername() {
     std::string cmd;
 
     if (getUserInput(cmd)) {
+        clrNewlines(cmd);
         if (pmanager.checkUser(cmd.c_str())) {
             _username = cmd;
             _status = s_passwd;
             _connfd.writeFD("Please enter password: ");
         }
         else{
+            _logger.log_alert("Username: " + cmd + " tried to log in, not recognized");
             _connfd.writeFD("Sorry, username not recognized\n");
             disconnect();
         }
@@ -149,8 +151,10 @@ void TCPConn::getPasswd() {
     std::string cmd;
 
     if (getUserInput(cmd)) {
+        clrNewlines(cmd);
         if(pmanager.checkPasswd(_username.c_str(), cmd.c_str())){
             _status = s_menu;//change status
+            _logger.log_alert("User: " + _username + " logged on successfully");
             sendMenu();
             handleConnection();
             return;
@@ -160,11 +164,14 @@ void TCPConn::getPasswd() {
     cmd.clear();
 
     if (getUserInput(cmd)) {
+        clrNewlines(cmd);
         if(pmanager.checkPasswd(_username.c_str(), cmd.c_str())){
+            _logger.log_alert("User: " + _username + " logged on successfully");
             _status = s_menu;//change status
             sendMenu();
         }
         else {
+            _logger.log_alert("User: " + _username + " tried to login, two incorrect attempts");
             _connfd.writeFD("Two incorrect passwords...\n");
             disconnect();
         }

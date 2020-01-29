@@ -43,6 +43,7 @@ bool PasswdMgr::checkUser(const char *name) {
         std::string uname;
 
         if (!readUser(pwfile, uname, hash, salt)) {
+
             return false;
         }
 
@@ -110,6 +111,7 @@ bool PasswdMgr::changePasswd(const char *name, const char *passwd) {
     std::vector<uint8_t> hash; // hash from the password file
     std::vector<uint8_t> salt;
     FileFD pwfile(_pwd_file.c_str());
+    std::ofstream outfile ("temp.txt");
     FileFD writer = FileFD ("temp");
 
     if (!writer.openFile(FileFD::writefd)){
@@ -123,21 +125,19 @@ bool PasswdMgr::changePasswd(const char *name, const char *passwd) {
     bool eof = false;
     while (!eof) {
         std::string uname;
-
         if (!readUser(pwfile, uname, hash, salt)) {
             eof = true;
         }
 
-        if (0 == uname.compare(name)) {
+        else if (0 == uname.compare(std::string(name))) {
             hashArgon2(hash, salt, passwd);
-            writeUser(writer, (std::string &) name, hash, salt);
+            writeUser(writer, std::string(uname), hash, salt);
         }
         else{
-            writeUser(writer, (std::string &) name, hash, salt);
-            result = true;
+            writeUser(writer, std::string (uname), hash, salt);
         }
     }
-
+    rename("temp.txt", _pwd_file.c_str());
     hash.clear();
     salt.clear();
     pwfile.closeFD();
@@ -264,14 +264,14 @@ void PasswdMgr::hashArgon2(std::vector<uint8_t> &ret_hash, std::vector<uint8_t> 
     uint8_t hash[hashlen];
     uint8_t salt[saltlen];
     srand(time(0));
+
     if (in_salt!=NULL){
         if (in_salt->size() != saltlen){
             throw std::runtime_error("salt length incorrect");
         }
         for (int i = 0; i < saltlen; i++) salt[i] = (*in_salt)[i];
-
-    }else{
-    for (int i = 0; i < saltlen; i++) salt[i] = ((rand() % 33)+33);
+    } else {
+        for (int i = 0; i < saltlen; i++) salt[i] = ((rand() % 33)+33);
     }
 
     uint32_t t_cost = 2;            // 1-pass computation
@@ -279,7 +279,7 @@ void PasswdMgr::hashArgon2(std::vector<uint8_t> &ret_hash, std::vector<uint8_t> 
     uint32_t parallelism = 1;       // number of threads and lanes
 
     // high-level API
-    argon2i_hash_raw(t_cost, m_cost, parallelism, &in_passwd, strlen(in_passwd), salt, 16, hash,
+    argon2i_hash_raw(t_cost, m_cost, parallelism, in_passwd, strlen(in_passwd), salt, 16, hash,
                      32);
     ret_hash.clear();
     ret_hash.reserve(hashlen);
@@ -331,7 +331,6 @@ void PasswdMgr::addUser(const char *name, const char *passwd) {
             writeUser(writefile, (std::string ) uname, hash, salt);
         }
     }
-
     rename("temp.txt", _pwd_file.c_str());
     writefile.closeFD();
     pwfile.closeFD();

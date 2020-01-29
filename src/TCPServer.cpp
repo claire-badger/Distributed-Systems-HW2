@@ -57,10 +57,10 @@ void TCPServer::bindSvr(const char *ip_addr, short unsigned int port) {
  
 }
 
-bool TCPServer::CheckIP(sockaddr_in ip_address,  socklen_t len){
-    char *str = nullptr;
-    inet_ntop(AF_INET, &(ip_address.sin_addr), str, len);
-    return std::find(ip_addresses.begin(), ip_addresses.end(), std::string(str)) != ip_addresses.end();
+bool TCPServer::CheckIP(){
+    std::string ip;
+    _sockfd.getIPAddrStr(ip);
+    return std::find(ip_addresses.begin(), ip_addresses.end(), ip) != ip_addresses.end();
 }
 
 /**********************************************************************************************
@@ -80,17 +80,18 @@ void TCPServer::listenSvr() {
    int num_read = 0;
 
    // Start the server socket listening
+   _log.log_alert("Server Started");
    _sockfd.listenFD(5);
 
-    
    while (online) {
       struct sockaddr_in cliaddr;
       socklen_t len = sizeof(cliaddr);
 
-      if (_sockfd.hasData() ) {//&& CheckIP(cliaddr, len)
+
+      if (_sockfd.hasData() && CheckIP()) {
          TCPConn *new_conn = new TCPConn();
          if (!new_conn->accept(_sockfd)) {
-            // _server_log.strerrLog("Data received on socket but failed to accept.");
+           _log.log_alert("Data received on socket but failed to accept.");
             continue;
          }
          std::cout << "***Got a connection***\n";
@@ -100,6 +101,7 @@ void TCPServer::listenSvr() {
          // Get their IP Address string to use in logging
          std::string ipaddr_str;
          new_conn->getIPAddrStr(ipaddr_str);
+         _log.log_alert("New successful connection at " + ipaddr_str);
 
 
          new_conn->sendText("Welcome to the CSCE 689 Server!\n");
