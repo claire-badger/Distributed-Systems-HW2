@@ -12,6 +12,7 @@ class Logger {
 public:
     Logger();
     ~Logger();
+    void log_alert(std::string msg, SocketFD log_fd);
     void log_alert(std::string msg);
 
 private:

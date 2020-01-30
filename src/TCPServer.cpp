@@ -87,53 +87,57 @@ void TCPServer::listenSvr() {
       struct sockaddr_in cliaddr;
       socklen_t len = sizeof(cliaddr);
 
+      if (CheckIP()) {
+          if (_sockfd.hasData()) {
+              TCPConn *new_conn = new TCPConn();
+              if (!new_conn->accept(_sockfd)) {
+                  std::string strbuf;
+                  _sockfd.getIPAddrStr(strbuf);
+                  _log.log_alert("Data received on socket but failed to accept. at IP address: " + strbuf);
+                  continue;
+              }
+              std::cout << "***Got a connection***\n";
 
-      if (_sockfd.hasData() && CheckIP()) {
-         TCPConn *new_conn = new TCPConn();
-         if (!new_conn->accept(_sockfd)) {
-           _log.log_alert("Data received on socket but failed to accept.");
-            continue;
-         }
-         std::cout << "***Got a connection***\n";
+              _connlist.push_back(std::unique_ptr<TCPConn>(new_conn));
 
-         _connlist.push_back(std::unique_ptr<TCPConn>(new_conn));
-
-         // Get their IP Address string to use in logging
-         std::string ipaddr_str;
-         new_conn->getIPAddrStr(ipaddr_str);
-         _log.log_alert("New successful connection at " + ipaddr_str);
+              // Get their IP Address string to use in logging
+              std::string ipaddr_str;
+              new_conn->getIPAddrStr(ipaddr_str);
+              _log.log_alert("New successful connection at " + ipaddr_str);
 
 
-         new_conn->sendText("Welcome to the CSCE 689 Server!\n");
+              new_conn->sendText("Welcome to the CSCE 689 Server!\n");
 
-         // Change this later
-         new_conn->startAuthentication();
-      }
+              // Change this later
+              new_conn->startAuthentication();
+          }
 
-      // Loop through our connections, handling them
-      std::list<std::unique_ptr<TCPConn>>::iterator tptr = _connlist.begin();
-      while (tptr != _connlist.end())
-      {
-         // If the user lost connection
-         if (!(*tptr)->isConnected()) {
-            // Log it
+          // Loop through our connections, handling them
+          std::list<std::unique_ptr<TCPConn>>::iterator tptr = _connlist.begin();
+          while (tptr != _connlist.end()) {
+              // If the user lost connection
+              if (!(*tptr)->isConnected()) {
+                  // Log it
 
-            // Remove them from the connect list
-            tptr = _connlist.erase(tptr);
-            std::cout << "Connection disconnected.\n";
-            continue;
-         }
+                  // Remove them from the connect list
+                  tptr = _connlist.erase(tptr);
+                  std::cout << "Connection disconnected.\n";
+                  continue;
+              }
 
-         // Process any user inputs
-         (*tptr)->handleConnection();
+              // Process any user inputs
+              (*tptr)->handleConnection();
 
-         // Increment our iterator
-         tptr++;
+              // Increment our iterator
+              tptr++;
+          }
+      }else{
+          _log.log_alert("Attempted connection by IP not on whitelist: ", _sockfd);
       }
 
       // So we're not chewing up CPU cycles unnecessarily
       nanosleep(&sleeptime, NULL);
-   } 
+   }
 
 
    

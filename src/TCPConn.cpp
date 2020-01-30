@@ -129,7 +129,7 @@ void TCPConn::getUsername() {
             _connfd.writeFD("Please enter password: ");
         }
         else{
-            _logger.log_alert("Username: " + cmd + " tried to log in, not recognized");
+            _logger.log_alert("Username: " + cmd + " tried to log in, not recognized", _connfd);
             _connfd.writeFD("Sorry, username not recognized\n");
             disconnect();
         }
@@ -154,7 +154,7 @@ void TCPConn::getPasswd() {
         clrNewlines(cmd);
         if(pmanager.checkPasswd(_username.c_str(), cmd.c_str())){
             _status = s_menu;//change status
-            _logger.log_alert("User: " + _username + " logged on successfully");
+            _logger.log_alert("User: " + _username + " logged on successfully", _connfd);
             sendMenu();
             handleConnection();
             return;
@@ -166,12 +166,12 @@ void TCPConn::getPasswd() {
     if (getUserInput(cmd)) {
         clrNewlines(cmd);
         if(pmanager.checkPasswd(_username.c_str(), cmd.c_str())){
-            _logger.log_alert("User: " + _username + " logged on successfully");
+            _logger.log_alert("User: " + _username + " logged on successfully ", _connfd);
             _status = s_menu;//change status
             sendMenu();
         }
         else {
-            _logger.log_alert("User: " + _username + " tried to login, two incorrect attempts");
+            _logger.log_alert("User: " + _username + " tried to login, two incorrect attempts", _connfd);
             _connfd.writeFD("Two incorrect passwords...\n");
             disconnect();
         }
@@ -336,6 +336,7 @@ void TCPConn::sendMenu() {
  *    Throws: runtime_error for unrecoverable issues
  **********************************************************************************************/
 void TCPConn::disconnect() {
+    _logger.log_alert("Disconnected", _connfd);
    _connfd.closeFD();
 }
 
