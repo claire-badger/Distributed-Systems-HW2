@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="AFIT_CSCE689_HW2_S"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="addUser">
+				<Option output="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/addUser" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/include"/>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/src"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 addUser"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="addUser/fast">
+				<Option output="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/addUser" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/include"/>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/src"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 addUser/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Client">
+				<Option output="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/include"/>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/src"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Client/fast">
+				<Option output="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/include"/>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/src"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Server">
+				<Option output="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/include"/>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/src"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 Server"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Server/fast">
+				<Option output="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/include"/>
+					<Add directory="/home/claire/AFIT-CSCE689-HW2-S/src"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 Server/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/include/Client.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/include/FileDesc.h">
+			<Option target="addUser"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/include/PasswdMgr.h">
+			<Option target="addUser"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/include/Server.h">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/include/TCPClient.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/include/TCPConn.h">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/include/TCPServer.h">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/include/exceptions.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/include/strfuncts.h">
+			<Option target="addUser"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/Client.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/FileDesc.cpp">
+			<Option target="addUser"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/Logger.cpp">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/Logger.h">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/PasswdMgr.cpp">
+			<Option target="addUser"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/Server.cpp">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/TCPClient.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/TCPConn.cpp">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/TCPServer.cpp">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/adduser_main.cpp">
+			<Option target="addUser"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/client_main.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/server_main.cpp">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/src/strfuncts.cpp">
+			<Option target="addUser"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/claire/AFIT-CSCE689-HW2-S/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

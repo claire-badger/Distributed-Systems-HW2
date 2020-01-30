@@ -1,0 +1,5 @@
+/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/CMakeFiles/addUser.dir
+/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/CMakeFiles/Client.dir
+/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/claire/AFIT-CSCE689-HW2-S/cmake-build-debug/CMakeFiles/Server.dir

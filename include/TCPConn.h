@@ -2,8 +2,14 @@
 #define TCPCONN_H
 
 #include "FileDesc.h"
+#include "PasswdMgr.h"
+#include "Logger.h"
+
 
 const int max_attempts = 2;
+
+// The filename/path of the password file
+const char pwdfilename[] = "passwd";
 
 // Methods and attributes to manage a network connection, including tracking the username
 // and a buffer for user input. Status tracks what "phase" of login the user is currently in
@@ -44,12 +50,16 @@ private:
    statustype _status = s_username;
 
    SocketFD _connfd;
+
+   Logger _logger;
  
    std::string _username; // The username this connection is associated with
 
    std::string _inputbuf;
 
    std::string _newpwd; // Used to store user input for changing passwords
+
+   PasswdMgr pmanager = PasswdMgr(pwdfilename);
 
    int _pwd_attempts = 0;
 };

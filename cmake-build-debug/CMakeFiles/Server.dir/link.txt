@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/Server.dir/src/Logger.cpp.o CMakeFiles/Server.dir/src/FileDesc.cpp.o CMakeFiles/Server.dir/src/PasswdMgr.cpp.o CMakeFiles/Server.dir/src/strfuncts.cpp.o CMakeFiles/Server.dir/src/Server.cpp.o CMakeFiles/Server.dir/src/server_main.cpp.o CMakeFiles/Server.dir/src/TCPConn.cpp.o CMakeFiles/Server.dir/src/TCPServer.cpp.o  -o Server -largon2 
